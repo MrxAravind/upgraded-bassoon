@@ -3,6 +3,8 @@ import time
 from flask import Flask
 from threading import Thread
 import os
+import datetime
+
 
 app = Flask(__name__)
 
@@ -32,7 +34,7 @@ keep_alive()
 while True:
     if "Running" in str(s.status):
         print("Server is Running")
-        now = time.time()
+        now = datetime.datetime.now()
         checks.append(now)
         s.run("neofetch")
     else:
