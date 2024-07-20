@@ -12,7 +12,10 @@ checks = []
 
 @app.route('/')
 def home():
-    latest = checks[-1]
+    if len(latest) !=0:
+         latest = checks[-1]
+    else:
+         latest = "Fucking Now Bitch"
     return f"Server is running,\nLate Update :{latest}"
 
 def run():
