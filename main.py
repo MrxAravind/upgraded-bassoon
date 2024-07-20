@@ -18,7 +18,7 @@ def home():
          latest = checks[-1]
     else:
          latest = "Fucking Now Bitch"
-    return f"Server is running,\nLate Update :{latest}"
+    return f"<h1>Server is running<h1>,<br><h2>Last Update :{latest}<h2>"
 
 def run():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
