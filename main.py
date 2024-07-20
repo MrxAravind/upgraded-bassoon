@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 checks = []
 
+os.system("lightning login")
+
 
 @app.route('/')
 def home():
