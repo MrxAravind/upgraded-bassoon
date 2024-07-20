@@ -6,9 +6,14 @@ import os
 
 app = Flask(__name__)
 
+
+checks = []
+
+
 @app.route('/')
 def home():
-    return "Server is running"
+    latest = checks[-1]
+    return f"Server is running,\nLate Update :{latest}"
 
 def run():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
@@ -24,6 +29,8 @@ keep_alive()
 while True:
     if "Running" in str(s.status):
         print("Server is Running")
+        now = time.time()
+        checks.append(now)
         s.run("neofetch")
     else:
         print("Starting Server...")
