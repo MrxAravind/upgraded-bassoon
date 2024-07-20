@@ -12,7 +12,7 @@ checks = []
 
 @app.route('/')
 def home():
-    if len(latest) !=0:
+    if len(checks) != 0:
          latest = checks[-1]
     else:
          latest = "Fucking Now Bitch"
