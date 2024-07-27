@@ -34,10 +34,9 @@ keep_alive()
 while True:
     if "Running" in str(s.status):
         if (started_time - datetime.datetime.now()).total_seconds() > 13500:
-           s.stop()
-           print("Server is Restarted")
-           time.sleep(120)
-           s.start()
+           print("Server is Duplicated")
+           new = s.duplicate()
+           time.sleep(30)
            print("Starting Server...")
            s.run("neofetch")
         else:
