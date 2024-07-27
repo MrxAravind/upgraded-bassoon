@@ -33,12 +33,22 @@ keep_alive()
 
 while True:
     if "Running" in str(s.status):
-        print("Server is Running")
-        now = datetime.datetime.now()
-        checks.append(now)
-        s.run("neofetch")
+        if (started_time - datetime.datetime.now()).total_seconds() > 13500:
+           s.stop()
+           print("Server is Restarted")
+           time.sleep(120)
+           s.start()
+           print("Starting Server...")
+           s.run("neofetch")
+        else:
+              print("Server is Running")
+              now = datetime.datetime.now()
+              checks.append(now)
+              s.run("neofetch")
     else:
+        started_time = datetime.datetime.now()
         print("Starting Server...")
         s.start()
         continue
-    time.sleep(60)
+    time.sleep(60)    
+        
