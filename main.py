@@ -18,7 +18,7 @@ def home():
          latest = checks[-1]
     else:
          latest = "Fucking Now Bitch"
-    return f"<center><h1>Server is running<h1><center><br><center><h2>Last Update :{(started_time - datetime.datetime.now()).total_seconds()} Secconds<h2><center><br><center><h2>Total UpTime :{latest}<h2><center>"
+    return f"<center><h1>Server is running<h1><center><br><center><h2>Last Update :{latest}<h2><center><br><center><h2>Total UpTime :{( datetime.datetime.now() - started_time).total_seconds()} Secconds<h2><center>"
 
 def run():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
