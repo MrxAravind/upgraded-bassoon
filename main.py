@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 checks = []
-
+started_time = datetime.datetime.now()
 
 @app.route('/')
 def home():
@@ -29,6 +29,7 @@ def keep_alive():
 
 s = Studio(name="statutory-blue-cgbmi", teamspace="vision-model", user="mrxaravind")
 new = s.duplicate()
+
 keep_alive()
 
 while True:
