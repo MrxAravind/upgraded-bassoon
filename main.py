@@ -27,7 +27,7 @@ def keep_alive():
     t = Thread(target=run)
     t.start()
 
-s = Studio(name="certain-fuchsia-4sky", teamspace="vision-model", user="iknowhim52")
+s = Studio(name="scratch-studio", teamspace="vision-model", user="mrxaravind")
 
 keep_alive()
 
