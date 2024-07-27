@@ -18,7 +18,7 @@ def home():
          latest = checks[-1]
     else:
          latest = "Fucking Now Bitch"
-    return f"<center><h1>Server is running<h1><center><br><center><h2>Last Update :{latest}<h2><center>"
+    return f"<center><h1>Server is running<h1><center><br><center><h2>Last Update :{(started_time - datetime.datetime.now()).total_seconds()} Secconds<h2><center><br><center><h2>Total UpTime :{latest}<h2><center>"
 
 def run():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
@@ -27,27 +27,26 @@ def keep_alive():
     t = Thread(target=run)
     t.start()
 
-s = Studio(name="scratch-studio", teamspace="vision-model", user="mrxaravind")
-
+s = Studio(name="statutory-blue-cgbmi", teamspace="vision-model", user="mrxaravind")
+new = s.duplicate()
 keep_alive()
 
 while True:
-    if "Running" in str(s.status):
-        if (started_time - datetime.datetime.now()).total_seconds() > 13500:
-           print("Server is Duplicated")
+    if "Running" in str(new.status):
+        if (started_time - datetime.datetime.now()).total_seconds() > 14000:
+           new.stop()
+           new.delete()
            new = s.duplicate()
-           time.sleep(30)
-           print("Starting Server...")
-           s.run("neofetch")
         else:
-              print("Server is Running")
-              now = datetime.datetime.now()
-              checks.append(now)
-              s.run("neofetch")
+            print("Server is Running")
+            now = datetime.datetime.now()
+            checks.append(now)
+            new.run("neofetch")
     else:
         started_time = datetime.datetime.now()
         print("Starting Server...")
-        s.start()
+        new.start()
+        new.run("wget https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh &&  bash mltb.sh")
         continue
     time.sleep(60)    
         
