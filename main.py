@@ -1,4 +1,4 @@
-import time
+9import time
 import datetime
 import logging
 import os
@@ -35,8 +35,6 @@ def cleanup():
         
 def start_new():
      s = Studio(name="Chicken Bot",teamspace='vision-model',user='mrxaravind', create_ok=True)
-     s.auto_shutdown = True
-     s.auto_shutdown_time = 3600 * 3.75
      while s.Status == Status.Pending:
           time.sleep(1)
      if s.Status == Status.Running:
