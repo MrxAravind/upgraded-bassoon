@@ -77,6 +77,7 @@ def keep_alive():
 keep_alive()
 
 try:
+    new = None
     stud = cleanup()
     if stud:
          logging.info(stud)
