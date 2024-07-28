@@ -25,9 +25,7 @@ def cleanup():
     try:
       teamspace = Teamspace('vision-model', user='mrxaravind')
       all_studios = teamspace.studios
-      logging.info(all_studios)
       if len(all_studios) != 0:
-         logging.info(all_studios)
          for studio in all_studios:
              s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
              logging.info(f"Deleting {studio.name}--{s.status}")
@@ -82,15 +80,14 @@ try:
     stud = cleanup()
     if stud:
          logging.info(stud)
-    new,started_time = start_new()
-    logging.info("Starting New Server...")
     while True:
        if Status.Running == new.status:        
           uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()        
           if uptime_seconds > 13500:
-               logging.info("Creating New Server!!")
+               logging.info("Restart Server!!")
                new.stop()
                new.delete()
+               logging.info("Cleaning Old Servers...")
                stud = cleanup()
                time.sleep(3)
                if stud:
@@ -105,7 +102,7 @@ try:
             output = new.run("screenfetch")
             logging.info(output)
        else:
-           logging.info("Starting New Server...")
+           logging.info("Cleaning Old Server...")
            stud = cleanup()
            logging.info("Starting New Server...")
            new,started_time = start_new()
