@@ -60,6 +60,7 @@ while True:
             logging.info("Server is Running")
             now = datetime.datetime.now()
             checks.append(now)
+            output = new.run("apt install neofetch")
             output = new.run("neofetch")
             logging.info(output)
     else:
