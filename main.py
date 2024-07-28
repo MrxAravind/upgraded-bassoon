@@ -35,9 +35,9 @@ def cleanup():
         
 def start_new():
      s = Studio(name="Chicken Bot",teamspace='vision-model',user='mrxaravind', create_ok=True)
-     while s.Status == Status.Pending:
+     while s.status == Status.Pending:
           time.sleep(1)
-     if s.Status == Status.Running:
+     if s.status == Status.Running:
            started_time = datetime.datetime.now()
      return s,started_time
 
