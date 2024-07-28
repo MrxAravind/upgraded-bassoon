@@ -41,10 +41,8 @@ def start_new():
      s = Studio(name=f"Chicken Bot{random.randrange(1,100)}",teamspace='vision-model',user='mrxaravind', create_ok=True)
      s.start()
      time.sleep(2)
-     logging.info(s.status)
      while s.status == Status.Pending:
           time.sleep(2)
-     logging.info(s.status)
      started_time = datetime.datetime.now()
      return s,started_time
 
@@ -107,8 +105,10 @@ try:
            stud = cleanup()
            logging.info("Starting New Server...")
            new,started_time = start_new()
+           logging.info("Running the Bash !!")
            if Status.Running == new.status:
-                output = new.run("nohup sudo wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && sudo bash mltb.sh &")
+                new.run("sudo wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh")
+                new.run("nohup sudo bash mltb.sh &")
                 #logging.info(new.run("sudo docker ps"))
        time.sleep(60)
 except Exception as e:
