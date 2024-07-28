@@ -108,8 +108,8 @@ try:
            logging.info("Starting New Server...")
            new,started_time = start_new()
            if Status.Running == new.status:
-                output = new.run("sudo wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && sudo bash mltb.sh")
-                logging.info(new.run("sudo docker ps"))
+                output = new.run("nohup sudo wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && sudo bash mltb.sh &")
+                #logging.info(new.run("sudo docker ps"))
        time.sleep(60)
 except Exception as e:
     logging.info(e)
