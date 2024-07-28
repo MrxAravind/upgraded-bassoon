@@ -100,7 +100,7 @@ try:
             logging.info("Server is Running")
             now = datetime.datetime.now()
             checks.append(now)
-            output = new.run("sudo apt install neofetch")
+            output = new.run("sudo apt install neofetch  --fix-missing")
             output = new.run("neofetch")
             logging.info(output)
        else:
