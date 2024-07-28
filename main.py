@@ -19,11 +19,13 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Global variables to be used in the Flask app
 checks = []
+started_time = datetime.datetime.now()
 
 def cleanup(): 
     try:
       teamspace = Teamspace('vision-model', user='mrxaravind')
       all_studios = teamspace.studios
+      logging.info(all_studios)
       if len(all_studios) != 0:
          for studio in all_studios:
              s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
@@ -62,7 +64,7 @@ def home():
 def logs():
     with open(log_filename, 'r') as f:
         log_content = f.read().replace('\n', '<br>')
-    return render_template_string(f"<pre>{log_content}</pre>")
+    return f"<pre>{log_content}</pre>"
 
 def run_flask():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
@@ -75,6 +77,8 @@ def keep_alive():
 
 keep_alive()
 stud = cleanup()
+if stud:
+    logging.info(stud)
 new,started_time = start_new()
 logging.info("Starting New Server...")
 
@@ -90,22 +94,22 @@ while True:
             stud = cleanup()
             time.sleep(3)
             if stud:
-                logging.info("Starting New Server...")
-                new,started_time = start_new()
+               logging.info(stud)
+            logging.info("Starting New Server..")
+            new,started_time = start_new()
         else:
             logging.info("Server is Running")
             now = datetime.datetime.now()
             checks.append(now)
-            output = new.run("apt install neofetch")
+            output = new.run("sudo apt install neofetch")
             output = new.run("neofetch")
             logging.info(output)
     else:
         logging.info("Starting New Server...")
         stud = cleanup()
-        if stud:
-           logging.info("Starting New Server...")
-           new,started_time = start_new()
-           if Status.Running == new.status:
+        logging.info("Starting New Server...")
+        new,started_time = start_new()
+        if Status.Running == new.status:
               output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
               logging.info(output)
     time.sleep(60)
