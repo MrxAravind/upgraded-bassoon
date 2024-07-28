@@ -1,7 +1,7 @@
 import time
 import datetime
 import logging
-import os
+import os, random 
 from threading import Thread
 from flask import Flask, render_template_string
 from lightning_sdk import Studio,Teamspace,Status
@@ -31,12 +31,13 @@ def cleanup():
              s.delete()
              time.sleep(2)
       return all_studios
-    except:
+    except Exception as e:
+      logging.error(e)
       return None
 
         
 def start_new():
-     s = Studio(name="Chicken Bot",teamspace='vision-model',user='mrxaravind', create_ok=True)
+     s = Studio(name=f"Chicken Bot{random.randrange(1,100)}",teamspace='vision-model',user='mrxaravind', create_ok=True)
      while s.status == Status.Pending:
           time.sleep(2)
      logging.info(s.status)
@@ -71,9 +72,8 @@ def keep_alive():
 
 keep_alive()
 stud = cleanup()
-if stud:
-   new,started_time = start_new()
-   logging.info("Starting New Server...")
+new,started_time = start_new()
+logging.info("Starting New Server...")
 
 
 
