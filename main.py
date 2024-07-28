@@ -109,7 +109,7 @@ try:
            stud = cleanup()
            logging.info("Starting New Server...")
            new,started_time = start_new()
-          if Status.Running == new.status:
+           if Status.Running == new.status:
                 output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
                 logging.info(output)
        time.sleep(60)
