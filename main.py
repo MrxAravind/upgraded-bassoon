@@ -26,8 +26,10 @@ def cleanup():
       all_studios = teamspace.studios
       if len(all_studios) != 0:
          for studio in all_studios:
-            s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
-            s.delete()
+             s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
+             logging.info(f"{studio.names}--{s.status}")
+             s.delete()
+             time.sleep(2)
       return all_studios
     except:
       return None
@@ -68,10 +70,10 @@ def keep_alive():
     t.start()
 
 keep_alive()
-cleanup()
-
-new,started_time = start_new()
-logging.info("Starting New Server...")
+stud = cleanup()
+if stud:
+   new,started_time = start_new()
+   logging.info("Starting New Server...")
 
 
 
@@ -82,9 +84,11 @@ while True:
             logging.info("Creating New Server")
             new.stop()
             new.delete()
-            cleanup()
+            stud = cleanup()
             time.sleep(3)
-            new,started_time = start_new()
+            if stud:
+                logging.info("Starting New Server...")
+                new,started_time = start_new()
         else:
             logging.info("Server is Running")
             now = datetime.datetime.now()
@@ -94,8 +98,11 @@ while True:
             logging.info(output)
     else:
         logging.info("Starting New Server...")
-        cleanup()
-        new,started_time = start_new()
-        output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
-        logging.info(output)
+        stud = cleanup()
+        if stud:
+           logging.info("Starting New Server...")
+           new,started_time = start_new()
+           if Status.Running == new.status:
+              output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
+              logging.info(output)
     time.sleep(60)
