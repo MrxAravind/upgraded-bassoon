@@ -76,40 +76,41 @@ def keep_alive():
     t.start()
 
 keep_alive()
-stud = cleanup()
-if stud:
-    logging.info(stud)
-new,started_time = start_new()
-logging.info("Starting New Server...")
 
-
-
-while True:
-    if Status.Running == new.status:        
-        uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()        
-        if uptime_seconds > 13500:
-            logging.info("Creating New Server")
-            new.stop()
-            new.delete()
-            stud = cleanup()
-            time.sleep(3)
-            if stud:
-               logging.info(stud)
-            logging.info("Starting New Server..")
-            new,started_time = start_new()
-        else:
+try:
+    stud = cleanup()
+    if stud:
+         logging.info(stud)
+    new,started_time = start_new()
+    logging.info("Starting New Server...")
+    while True:
+       if Status.Running == new.status:        
+          uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()        
+          if uptime_seconds > 13500:
+               logging.info("Creating New Server")
+               new.stop()
+               new.delete()
+               stud = cleanup()
+               time.sleep(3)
+               if stud:
+                   logging.info(stud)
+               logging.info("Starting New Server..")
+               new,started_time = start_new()
+          else:
             logging.info("Server is Running")
             now = datetime.datetime.now()
             checks.append(now)
             output = new.run("sudo apt install neofetch")
             output = new.run("neofetch")
             logging.info(output)
-    else:
-        logging.info("Starting New Server...")
-        stud = cleanup()
-        logging.info("Starting New Server...")
-        new,started_time = start_new()
-        if Status.Running == new.status:
-              output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
-              logging.info(output)
-    time.sleep(60)
+       else:
+           logging.info("Starting New Server...")
+           stud = cleanup()
+           logging.info("Starting New Server...")
+           new,started_time = start_new()
+          if Status.Running == new.status:
+                output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
+                logging.info(output)
+       time.sleep(60)
+except Exception as e:
+    logging.info(e)
