@@ -1,10 +1,14 @@
-from lightning_sdk import Studio
 import time
 import datetime
 import logging
 import os
 from threading import Thread
 from flask import Flask, render_template_string
+from lightning_sdk import Studio,Teamspace,Status
+
+
+
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -15,7 +19,31 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Global variables to be used in the Flask app
 checks = []
-started_time = datetime.datetime.now()
+
+def cleanup(): 
+    try:
+      teamspace = Teamspace('vision-model', user='mrxaravind')
+      all_studios = teamspace.studios
+      if len(all_studios) != 0:
+         for studio in all_studios:
+            s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
+            s.delete()
+      return all_studios
+    except:
+      return None
+
+        
+def start_new():
+     s = Studio(name="Chicken Bot", create_ok=True)
+     s.auto_shutdown = True
+     s.auto_shutdown_time = 3600 * 3.75
+     while s.Status == Status.Pending:
+          time.sleep(1)
+     if s.Status == Status.Running:
+           started_time = datetime.datetime.now()
+     return s,started_time
+
+
 
 @app.route('/')
 def home():
@@ -41,21 +69,24 @@ def keep_alive():
     t.daemon = True
     t.start()
 
-# Studio setup
-s = Studio(name="statutory-blue-cgbmi", teamspace="vision-model", user="mrxaravind")
-new = s.duplicate()
-
 keep_alive()
+cleanup()
+
+new,started_time = start_new()
+logging.info("Starting New Server...")
+
+
 
 while True:
-    if "Running" in str(new.status):
-        uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()
+    if Status.Running == new.status:        
+        uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()        
         if uptime_seconds > 13500:
-            logging.info("Restarting server after 13500 seconds of uptime.")
+            logging.info("Creating New Server")
             new.stop()
             new.delete()
-            new = s.duplicate()
-            started_time = datetime.datetime.now()  # Reset started time after duplication
+            cleanup()
+            time.sleep(3)
+            new,started_time = start_new()
         else:
             logging.info("Server is Running")
             now = datetime.datetime.now()
@@ -64,9 +95,9 @@ while True:
             output = new.run("neofetch")
             logging.info(output)
     else:
-        logging.info("Starting Server...")
-        new.start()
-        output = new.run("wget https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && bash mltb.sh")
+        logging.info("Starting New Server...")
+        cleanup()
+        new,started_time = start_new()
+        output = new.run("sudo curl https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh | sudo bash ")
         logging.info(output)
-        started_time = datetime.datetime.now()  # Reset started time after starting
     time.sleep(60)
