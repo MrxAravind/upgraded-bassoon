@@ -82,7 +82,7 @@ try:
     if stud:
          logging.info(stud)
     while True:
-       if Status.Running == new.status:        
+       if new and Status.Running == new.status:        
           uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()        
           if uptime_seconds > 13500:
                logging.info("Restart Server!!")
