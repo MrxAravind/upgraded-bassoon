@@ -27,6 +27,7 @@ def cleanup():
       all_studios = teamspace.studios
       logging.info(all_studios)
       if len(all_studios) != 0:
+         logging.info(all_studios)
          for studio in all_studios:
              s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
              logging.info(f"{studio.name}--{s.status}")
