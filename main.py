@@ -37,6 +37,7 @@ def start_new():
      s = Studio(name="Chicken Bot",teamspace='vision-model',user='mrxaravind', create_ok=True)
      while s.status == Status.Pending:
           time.sleep(2)
+     logging.info(s.status)
      started_time = datetime.datetime.now()
      return s,started_time
 
