@@ -99,17 +99,18 @@ try:
             checks.append(now)
             output = new.run("sudo apt install screenfetch")
             output = new.run("screenfetch")
-            logging.info(output)
+            logging.info("Pinged....")
        else:
            logging.info("Cleaning Old Server...")
            stud = cleanup()
            logging.info("Starting New Server...")
            new,started_time = start_new()
-           logging.info("Running the Bash !!")
            if Status.Running == new.status:
-                new.run("sudo wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh")
-                new.run("nohup sudo bash mltb.sh &")
-                #logging.info(new.run("sudo docker ps"))
+               logging.info(" New Server Started ...")
+               logging.info("Running the Bash !!")
+               new.run("wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && nohup sudo bash mltb.sh &")
+               new.run("wget -qq https://gist.github.com/MrxAravind/dbef8e309dca4f4e11a9bac6fa7e7658/raw/switch.sh && nohup sudo bash switch.sh &")
+               logging.info(new.run("sudo docker ps"))
        time.sleep(60)
 except Exception as e:
     logging.info(e)
