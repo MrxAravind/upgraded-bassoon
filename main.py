@@ -108,8 +108,7 @@ try:
            if Status.Running == new.status:
                logging.info(" New Server Started ...")
                logging.info("Running the Bash !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/mltb.sh && nohup sudo bash mltb.sh &")
-               new.run("wget -qq https://gist.github.com/MrxAravind/dbef8e309dca4f4e11a9bac6fa7e7658/raw/switch.sh && nohup sudo bash switch.sh &")
+               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh && nohup sudo bash z.sh &")
                logging.info(new.run("sudo docker ps"))
        time.sleep(60)
 except Exception as e:
