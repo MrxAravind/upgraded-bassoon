@@ -63,6 +63,7 @@ def logs():
         log_content = f.read().replace('\n', '<br>')
     return f"<pre>{log_content}</pre>"
 
+
 def run_flask():
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 80)))
 
@@ -73,6 +74,8 @@ def keep_alive():
     t.start()
 
 keep_alive()
+
+
 
 try:
     new = None
@@ -108,9 +111,9 @@ try:
            if Status.Running == new.status:
                logging.info(" New Server Started ...")
                logging.info("Installing the Vpn !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/4cc8a40f203e128d2a298ff610812e2e/raw/vpn.sh && sudo bash vpn.sh")
+               new.run("wget -qq https://gist.github.com/MrxAravind/4cc8a40f203e128d2a298ff610812e2e/raw/vpn.sh && nohup sudo bash vpn.sh &")
                logging.info("Installing the Bot !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh && sudo bash z.sh ")
+               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh && nohup sudo bash z.sh &")
        time.sleep(60)
 except Exception as e:
     logging.info(e)
