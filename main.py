@@ -107,9 +107,10 @@ try:
            new,started_time = start_new()
            if Status.Running == new.status:
                logging.info(" New Server Started ...")
-               logging.info("Running the Bash !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh && nohup sudo bash z.sh &")
-               logging.info(new.run("sudo docker ps"))
+               logging.info("Installing the Vpn !!")
+               new.run("wget -qq https://gist.github.com/MrxAravind/4cc8a40f203e128d2a298ff610812e2e/raw/vpn.sh && sudo bash vpn.sh")
+               logging.info("Installing the Bot !!")
+               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh && sudo bash z.sh ")
        time.sleep(60)
 except Exception as e:
     logging.info(e)
