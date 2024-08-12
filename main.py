@@ -113,8 +113,8 @@ try:
                logging.info("Installing the Vpn !!")
                new.run("wget -qq https://gist.github.com/MrxAravind/4cc8a40f203e128d2a298ff610812e2e/raw/vpn.sh")
                logging.info("Installing the Bot !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh")
-               output = new.run("sudo bash z.sh & sudo bash vpn.sh")
+               new.run("wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/066d0da1596aa253c3bf74ecd1b5c6bf22661fcb/mltb.sh")
+               output = new.run("sudo bash mltb.sh & sudo bash vpn.sh")
                logging.info(output)
        time.sleep(60)
 except Exception as e:
