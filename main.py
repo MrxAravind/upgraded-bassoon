@@ -38,7 +38,7 @@ def cleanup():
 
         
 def start_new():
-     s = Studio(name=f"Chicken Bot{random.randrange(1,100)}",teamspace='vision-model',user='mrxaravind', create_ok=True)
+     s = Studio(name=f"Chicken Bot{random.randrange(1,100)}",teamspace='vision-model',user='spidyweeb', create_ok=True)
      s.start()
      time.sleep(2)
      while s.status == Status.Pending:
