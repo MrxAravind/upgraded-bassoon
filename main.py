@@ -23,11 +23,11 @@ started_time = datetime.datetime.now()
 
 def cleanup(): 
     try:
-      teamspace = Teamspace('vision-model', user='mrxaravind')
+      teamspace = Teamspace('vision-model', user='spidyweeb')
       all_studios = teamspace.studios
       if len(all_studios) != 0:
          for studio in all_studios:
-             s = Studio(studio.name, teamspace='vision-model',user='mrxaravind')
+             s = Studio(studio.name, teamspace='vision-model',user='spidyweeb')
              logging.info(f"Deleting {studio.name}--{s.status}")
              s.delete()
              time.sleep(2)
@@ -110,11 +110,9 @@ try:
            new,started_time = start_new()
            if Status.Running == new.status:
                logging.info(" New Server Started ...")
-               logging.info("Installing the Vpn !!")
-               new.run("wget -qq https://gist.github.com/MrxAravind/4cc8a40f203e128d2a298ff610812e2e/raw/vpn.sh")
                logging.info("Installing the Bot !!")
                new.run("wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/066d0da1596aa253c3bf74ecd1b5c6bf22661fcb/mltb.sh")
-               output = new.run("sudo bash mltb.sh & sudo bash vpn.sh")
+               output = new.run("sudo bash mltb.sh")
                logging.info(output)
        time.sleep(60)
 except Exception as e:
