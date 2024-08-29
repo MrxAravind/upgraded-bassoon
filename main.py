@@ -18,6 +18,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 checks = []
 started_time = datetime.datetime.now()
 
+
 def cleanup():
     try:
         teamspace = Teamspace('vision-model', user='spidyweeb')
@@ -36,6 +37,7 @@ def cleanup():
         logging.error(f"Error in cleanup: {e}")
         return None
 
+
 def start_new():
     try:
         s = Studio(name=f"Chicken Bot {random.randrange(1, 100)}", teamspace='vision-model', user='spidyweeb', create_ok=True)
@@ -49,7 +51,7 @@ def start_new():
     except Exception as e:
         logging.error(f"Error in start_new: {e}")
         return None, None
-
+      
 @app.route('/')
 def home():
     try:
