@@ -97,7 +97,7 @@ try:
         try:
             if new and new.status == Status.Running:
                 uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()
-                if uptime_seconds > 13500:
+                if uptime_seconds > 12400 :
                     logging.info("Restart Server!!")
                     new.stop()
                     new.delete()
@@ -124,8 +124,7 @@ try:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
                     new.run("wget -qq https://gist.github.com/MrxAravind/f99ab9b5213d6c31b9f043494d007a59/raw/066d0da1596aa253c3bf74ecd1b5c6bf22661fcb/mltb.sh")
-                    output = new.run("sudo bash mltb.sh")
-                    logging.info(output)
+                    new.run("sudo bash mltb.sh")
             time.sleep(60)
         except Exception as e:
             logging.error(f"Error in main loop: {e}")
