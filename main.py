@@ -124,7 +124,7 @@ try:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
                     new.run("wget -qq https://gist.github.com/MrxAravind/da7f7fef1dd382deee5228872ac939e5/raw/a087205d2af67a7d34610342cf7c076cc7fa8e1c/alist.sh")
-                    new.run("nohup sudo bash mltb.sh &")
+                    new.run("nohup sudo bash alist.sh &")
                     print("Completed Instalation...")
             time.sleep(60)
         except Exception as e:
