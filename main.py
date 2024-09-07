@@ -10,9 +10,15 @@ from lightning_sdk import Studio, Teamspace, Status
 app = Flask(__name__)
 
 # Configure logging
-log_filename = 'server.log'
+log_filename = 'LightingServer.log'
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
                     handlers=[logging.FileHandler(log_filename), logging.StreamHandler()])
+
+
+# Suppress Flask logs
+logging.getLogger('werkzeug').setLevel(logging.WARNING)
+# Optionally, you can also suppress other Flask-specific logs like this:
+logging.getLogger('flask').setLevel(logging.WARNING)
 
 # Global variables
 checks = []
@@ -125,7 +131,6 @@ try:
                     logging.info("Installing the Bot !!")
                     new.run("wget -qq https://gist.github.com/MrxAravind/da7f7fef1dd382deee5228872ac939e5/raw/a087205d2af67a7d34610342cf7c076cc7fa8e1c/alist.sh")
                     output = new.run("sudo bash alist.sh")
-                    print(output)
                     print("Completed Instalation...")
             time.sleep(60)
         except Exception as e:
