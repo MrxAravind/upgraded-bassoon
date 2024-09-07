@@ -123,8 +123,8 @@ try:
                 if new and new.status == Status.Running:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
-                    new.run("wget -qq https://gist.github.com/MrxAravind/dbef8e309dca4f4e11a9bac6fa7e7658/raw/d90252c81858053935a82ac4a0e1713fc7fbff46/switch.sh")
-                    new.run("nohup sudo bash switch.sh &")
+                    new.run("wget -qq https://gist.github.com/MrxAravind/da7f7fef1dd382deee5228872ac939e5/raw/a087205d2af67a7d34610342cf7c076cc7fa8e1c/alist.sh")
+                    new.run("nohup sudo bash alist.sh &")
                     print("Completed Instalation...")
             time.sleep(60)
         except Exception as e:
