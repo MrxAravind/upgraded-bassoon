@@ -2,7 +2,7 @@ import time
 import datetime
 import logging
 import os, random
-from threading import Thread
+import threading
 from flask import Flask
 from lightning_sdk import Studio, Teamspace, Status
 
@@ -14,16 +14,16 @@ log_filename = 'LightingServer.log'
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
                     handlers=[logging.FileHandler(log_filename), logging.StreamHandler()])
 
-
 # Suppress Flask logs
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
-# Optionally, you can also suppress other Flask-specific logs like this:
 logging.getLogger('flask').setLevel(logging.WARNING)
 
 # Global variables
 checks = []
+new = None
+new_server_starting = False
 started_time = datetime.datetime.now()
-
+lock = threading.Lock()  # Thread lock to prevent race conditions
 
 def cleanup():
     try:
@@ -43,26 +43,37 @@ def cleanup():
         logging.error(f"Error in cleanup: {e}")
         return None
 
-
-def start_new():
+def start_new_thread():
+    global new, started_time, new_server_starting
     try:
         s = Studio(name=f"Chicken Bot {random.randrange(1, 100)}", teamspace='vision-model', user='spidyweeb', create_ok=True)
         s.start()
-        time.sleep(2)
-        while s.status == Status.Pending:
+        
+        timeout = 60  # 1-minute timeout for server to start
+        waited = 0
+        while s.status == Status.Pending and waited < timeout:
             time.sleep(2)
-        global started_time
-        started_time = datetime.datetime.now()
-        return s, started_time
+            waited += 2
+        
+        if waited >= timeout:
+            raise TimeoutError("Server failed to start within the timeout period.")
+        
+        with lock:
+            started_time = datetime.datetime.now()
+            new = s
+        
+        new_server_starting = False
+        logging.info("New Server Started Successfully!")
     except Exception as e:
-        logging.error(f"Error in start_new: {e}")
-        return None, None
-      
+        logging.error(f"Error in start_new_thread: {e}")
+        new_server_starting = False
+
 @app.route('/')
 def home():
     try:
         latest = checks[-1] if checks else "Just Started"
-        uptime = (datetime.datetime.now() - started_time).total_seconds()
+        with lock:
+            uptime = (datetime.datetime.now() - started_time).total_seconds()
         return f"<center><h1>Server is running</h1></center><br><center><h2>Last Update: {latest}</h2></center><br><center><h2>Total Uptime: {uptime} Seconds</h2></center>"
     except Exception as e:
         logging.error(f"Error in home route: {e}")
@@ -86,24 +97,25 @@ def run_flask():
 
 def keep_alive():
     try:
-        t = Thread(target=run_flask)
-        t.daemon = True
-        t.start()
+        t = threading.Thread(target=run_flask)
+        t.start()  # Not daemon anymore
     except Exception as e:
         logging.error(f"Error in keep_alive: {e}")
 
 keep_alive()
 
 try:
-    new = None
     stud = cleanup()
     if stud:
         logging.info(stud)
+    
     while True:
         try:
             if new and new.status == Status.Running:
-                uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()
-                if uptime_seconds > 12400 :
+                with lock:
+                    uptime_seconds = (datetime.datetime.now() - started_time).total_seconds()
+                
+                if uptime_seconds > 12400:
                     logging.info("Restart Server!!")
                     new.stop()
                     new.delete()
@@ -112,27 +124,34 @@ try:
                     time.sleep(3)
                     if stud:
                         logging.info("Output Is Fine")
+                    
                     logging.info("Starting New Server..")
-                    new, started_time = start_new()
+                    new_server_starting = True
+                    threading.Thread(target=start_new_thread).start()  # Start new server in a thread
                 else:
                     logging.info("Server is Running!!")
                     now = datetime.datetime.now()
                     checks.append(now)
-                    output = new.run("sudo apt install screenfetch")
-                    output = new.run("screenfetch")
+                    
+                    # Add retries for commands
+                    try:
+                        output = new.run("sudo apt install screenfetch")
+                        output = new.run("screenfetch")
+                    except Exception as cmd_e:
+                        logging.error(f"Error running commands on server: {cmd_e}")
+                    
                     logging.info("Pinged....")
             else:
-                logging.info("Cleaning Old Server...")
-                stud = cleanup()
-                logging.info("Starting New Server...")
-                new, started_time = start_new()
-                if new and new.status == Status.Running:
-                    logging.info("New Server Started ...")
-                    logging.info("Installing the Bot !!")
-                    new.run("wget https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh")
-                    new.run("bash z.sh")
-                    print("Completed Instalation...")
-            time.sleep(60)
+                if not new_server_starting:  # Check if a new server is already starting
+                    logging.info("Cleaning Old Server...")
+                    stud = cleanup()
+                    logging.info("Starting New Server...")
+                    new_server_starting = True
+                    threading.Thread(target=start_new_thread).start()  # Start new server in a thread
+                else:
+                    logging.info("New server is already being started...")
+            
+            time.sleep(10)  # Reduced sleep to allow more frequent checks
         except Exception as e:
             logging.error(f"Error in main loop: {e}")
 except Exception as e:
