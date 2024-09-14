@@ -172,7 +172,7 @@ try:
                     now = datetime.datetime.now()
                     checks.append(now)
                     output = new.run("sudo apt install screenfetch")
-                    output = new.run("screenfetch")
+                    output = new.run("screenfetch -n -N")
                     logging.info("Pinged....")
             else:
                 logging.info("Cleaning Old Server...")
