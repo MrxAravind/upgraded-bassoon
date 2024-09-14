@@ -45,7 +45,7 @@ def cleanup():
         return None
 
 def start_new_thread():
-    global new, started_time, new_server_starting
+    global new, started_time, new_server_starting,logging
     try:
         s = Studio(name=f"Chicken Bot {random.randrange(1, 100)}", teamspace='vision-model', user='spidyweeb', create_ok=True)
         s.start()
@@ -195,6 +195,9 @@ try:
                     logging.info("Starting New Server...")
                     new_server_starting = True
                     threading.Thread(target=start_new_thread).start()  # Start new server in a thread
+                    new.run("wget https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh")
+                    out = new.run("sudo bash z.sh")
+                    logging.info(out)
                 else:
                     logging.info("New server is already being started...")
             
