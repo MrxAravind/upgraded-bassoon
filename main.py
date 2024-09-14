@@ -135,8 +135,9 @@ try:
                     
                     # Add retries for commands
                     try:
-                        output = new.run("sudo apt install screenfetch")
+                        new.run("sudo apt install screenfetch")
                         output = new.run("screenfetch")
+                        logging.info(output)
                     except Exception as cmd_e:
                         logging.error(f"Error running commands on server: {cmd_e}")
                     
@@ -151,7 +152,7 @@ try:
                 else:
                     logging.info("New server is already being started...")
             
-            time.sleep(10)  # Reduced sleep to allow more frequent checks
+            time.sleep(60)  # Reduced sleep to allow more frequent checks
         except Exception as e:
             logging.error(f"Error in main loop: {e}")
 except Exception as e:
