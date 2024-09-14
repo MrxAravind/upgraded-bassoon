@@ -107,9 +107,7 @@ def command_executor():
 
         # Run the command using subprocess
         try:
-            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            output = result.stdout
-            error = result.stderr if result.stderr else None
+            output = new.run(command)
         except Exception as e:
             error = str(e)
 
