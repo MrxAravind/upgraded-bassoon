@@ -103,14 +103,14 @@ def command_executor():
     output = None
     error = None
     if request.method == 'POST':
-        command = request.form.get('command')
-
-        # Run the command using subprocess
-        try:
-            output = new.run(command)
-        except Exception as e:
-            error = str(e)
-
+       if new:
+           command = request.form.get('command')
+           try:
+              output = new.run(command)
+           except Exception as e:
+              error = str(e)
+        else:
+         output = "Server Is Not Online..."
     return render_template_string(html_template, output=output, error=error)
 
 
