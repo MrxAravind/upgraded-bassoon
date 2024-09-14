@@ -136,7 +136,7 @@ try:
                     # Add retries for commands
                     try:
                         new.run("sudo apt install screenfetch")
-                        output = new.run("screenfetch")
+                        output = new.run("screenfetch -n -N")
                         logging.info(output)
                     except Exception as cmd_e:
                         logging.error(f"Error running commands on server: {cmd_e}")
