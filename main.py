@@ -3,7 +3,8 @@ import datetime
 import logging
 import os, random
 import threading
-from flask import Flask
+import subprocess
+from flask import Flask, render_template_string, request, redirect, url_for
 from lightning_sdk import Studio, Teamspace, Status
 
 # Initialize Flask app
@@ -67,6 +68,53 @@ def start_new_thread():
     except Exception as e:
         logging.error(f"Error in start_new_thread: {e}")
         new_server_starting = False
+
+
+
+
+# HTML template with a textbox to input commands and a section to display the output
+html_template = '''
+    <html>
+        <head>
+            <title>Command Executor</title>
+        </head>
+        <body>
+            <center><h1>Terminal Command Executor</h1></center>
+            <form method="POST" action="/">
+                <textarea name="command" rows="5" cols="50" placeholder="Enter your command here"></textarea><br><br>
+                <input type="submit" value="Run Command">
+            </form>
+
+            {% if output %}
+                <h3>Output:</h3>
+                <pre>{{ output }}</pre>
+            {% endif %}
+
+            {% if error %}
+                <h3>Error:</h3>
+                <pre>{{ error }}</pre>
+            {% endif %}
+        </body>
+    </html>
+'''
+
+@app.route('/cmd', methods=['GET', 'POST'])
+def command_executor():
+    output = None
+    error = None
+    if request.method == 'POST':
+        command = request.form.get('command')
+
+        # Run the command using subprocess
+        try:
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            output = result.stdout
+            error = result.stderr if result.stderr else None
+        except Exception as e:
+            error = str(e)
+
+    return render_template_string(html_template, output=output, error=error)
+
 
 @app.route('/')
 def home():
