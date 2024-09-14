@@ -167,6 +167,15 @@ try:
                         logging.info("Output Is Fine")
                     logging.info("Starting New Server...")
                     new, started_time = start_new()
+                    while new and new.status != Status.Running:
+                             time.sleep(2)
+                    if new and new.status == Status.Running:
+                         logging.info("New Server Started ...")
+                         logging.info("Installing the Bot !!")
+                         out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && echo 'Z-Mirror bot is running in the background.' ")
+                         logging.info(out)           
+                         print("Completed Installation...")
+            
                 else:
                     logging.info("Server is Running!!")
                     now = datetime.datetime.now()
@@ -182,8 +191,7 @@ try:
                 if new and new.status == Status.Running:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
-                    new.run("wget https://gist.github.com/MrxAravind/057be3f62390036bd39427824a2492b4/raw/z.sh")
-                    out = new.run("bash z.sh")
+                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && echo 'Z-Mirror bot is running in the background.' ")
                     logging.info(out)           
                     print("Completed Installation...")
             time.sleep(60)
