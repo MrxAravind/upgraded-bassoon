@@ -172,7 +172,8 @@ try:
                     if new and new.status == Status.Running:
                          logging.info("New Server Started ...")
                          logging.info("Installing the Bot !!")
-                         out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && echo 'Z-Mirror bot is running in the background.' ")
+                         new.run("wget -qq https://mega.nz/linux/repo/xUbuntu_20.04/amd64/megacmd_1.7.0-10.1_amd64.deb && sudo apt install './megacmd_1.7.0-10.1_amd64.deb' && nohup mega-login mrspidy32@outlook.in Hatelenovo@33 & ")
+                         out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
                          logging.info(out)           
                          print("Completed Installation...")
             
@@ -191,8 +192,8 @@ try:
                 if new and new.status == Status.Running:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
-                    new.run("wget -qq https://mega.nz/linux/repo/xUbuntu_20.04/amd64/megacmd_1.7.0-10.1_amd64.deb && sudo apt install '$PWD/megacmd_1.7.0-10.1_amd64.deb' && nohup mega-login mrspidy32@outlook.in Hatelenovo@33 && mega-webdav /")
-                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && echo 'Z-Mirror bot is running in the background.' ")
+                    new.run("wget -qq https://mega.nz/linux/repo/xUbuntu_20.04/amd64/megacmd_1.7.0-10.1_amd64.deb && sudo apt install './megacmd_1.7.0-10.1_amd64.deb' && nohup mega-login mrspidy32@outlook.in Hatelenovo@33 & ")
+                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
                     logging.info(out)           
                     print("Completed Installation...")
             time.sleep(60)
