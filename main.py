@@ -172,16 +172,16 @@ try:
                     if new and new.status == Status.Running:
                          logging.info("New Server Started ...")
                          logging.info("Installing the Bot !!")
-                         new.run("wget https://gist.github.com/MrxAravind/c9a1f7df0f4acf34d36f97fed876895c/raw/rclone.sh && sudo bash rclone.sh")
-                         #out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
-                         #logging.info(out)           
+                         #new.run("wget https://gist.github.com/MrxAravind/c9a1f7df0f4acf34d36f97fed876895c/raw/rclone.sh && sudo bash rclone.sh")
+                         out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
+                         logging.info(out)           
                          print("Completed Installation...")
             
                 else:
                     logging.info("Server is Running!!")
                     now = datetime.datetime.now()
                     checks.append(now)
-                    output = new.run("awk 'END {print}' rcs.txt")
+                    output = new.run("sudo apt install screenfetch && screenfetch -n -N")
                     logging.info(output)
             else:
                 logging.info("Cleaning Old Server...")
@@ -191,9 +191,8 @@ try:
                 if new and new.status == Status.Running:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
-                    new.run("wget https://gist.github.com/MrxAravind/c9a1f7df0f4acf34d36f97fed876895c/raw/rclone.sh && sudo bash rclone.sh")
-                    #out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
-                    #logging.info(out)           
+                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
+                    logging.info(out)           
                     print("Completed Installation...")
             time.sleep(60)
         except Exception as e:
