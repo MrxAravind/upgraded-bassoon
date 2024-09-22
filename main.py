@@ -51,12 +51,12 @@ html_template = '''
 def cleanup():
     """Cleans up all existing studios."""
     try:
-        teamspace = Teamspace('vision-model', user='spidyweeb')
+        teamspace = Teamspace('vision-model', user='mrtharani')
         all_studios = teamspace.studios
         if all_studios:
             for studio in all_studios:
                 try:
-                    s = Studio(studio.name, teamspace='vision-model', user='spidyweeb')
+                    s = Studio(studio.name, teamspace='vision-model', user='mrtharani')
                     logging.info(f"Deleting {studio.name} -- {s.status}")
                     s.delete()
                     time.sleep(2)
@@ -71,7 +71,7 @@ def cleanup():
 def start_new():
     """Starts a new studio."""
     try:
-        s = Studio(name=f"Chicken Bot {random.randrange(1, 100)}", teamspace='vision-model', user='spidyweeb', create_ok=True)
+        s = Studio(name=f"Chicken Bot {random.randrange(1, 100)}", teamspace='vision-model', user='mrtharani', create_ok=True)
         s.start()
         time.sleep(2)
         while s.status == Status.Pending:
