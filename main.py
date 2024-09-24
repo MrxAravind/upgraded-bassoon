@@ -174,6 +174,7 @@ try:
                          logging.info("Installing the Bot !!")
                          #new.run("wget https://gist.github.com/MrxAravind/c9a1f7df0f4acf34d36f97fed876895c/raw/rclone.sh && sudo bash rclone.sh")
                          out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
+                         out2 = new.run("git clone https://github.com/MrxAravind/WZML-X && cd WZML-X && wget https://gist.github.com/MrxAravind/132f5cef9213f40ed9d66f45c4fd0f80/raw/config.env && wget https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf &&sudo docker build . -t wzmlx && sudo docker run -d -p 81:81 -p 8081:8081 wzmlx && echo 'WZML-X bot is running in the background.' ")
                          logging.info(out)           
                          print("Completed Installation...")
             
@@ -191,7 +192,8 @@ try:
                 if new and new.status == Status.Running:
                     logging.info("New Server Started ...")
                     logging.info("Installing the Bot !!")
-                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && mega-webdav/ && echo 'Z-Mirror bot is running in the background.' ")
+                    out = new.run("git clone https://github.com/MrxAravind/Z-Mirror && cd Z-Mirror && wget -q https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf && wget -q https://gist.github.com/MrxAravind/cbabf628786a48083c3858524358ded4/raw/config.env && sudo docker build . -t z_mirror && sudo docker run -d -p 80:80 -p 8080:8080 z_mirror && echo 'Z-Mirror bot is running in the background.' ")
+                    out2 = new.run("git clone https://github.com/MrxAravind/WZML-X && cd WZML-X && wget https://gist.github.com/MrxAravind/132f5cef9213f40ed9d66f45c4fd0f80/raw/config.env && wget https://gist.github.com/MrxAravind/cff83e9fa0d8b3f627e4d049c893b776/raw/rclone.conf &&sudo docker build . -t wzmlx && sudo docker run -d -p 81:81 -p 8081:8081 wzmlx && echo 'WZML-X bot is running in the background.' ")
                     logging.info(out)           
                     print("Completed Installation...")
             time.sleep(60)
